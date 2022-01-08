@@ -6,6 +6,9 @@ const app = express();
 // Connect to MongoDB
 connectDatabase();
 
+// Middleware
+app.use(express.json({ extended: false }));
+
 app.get('/', (req, res) => res.send(`API running on port ${PORT}.`));
 
 // Routes
