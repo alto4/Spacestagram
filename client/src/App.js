@@ -1,12 +1,13 @@
 import { Fragment } from 'react';
+import Navbar from './components/layout/Navbar';
+import Feed from './components/layout/Feed';
 import './App.css';
 
 const App = () => {
   return (
     <Fragment>
-      <h1>
-        Spacestagram <i className='fa fa-earth'></i>
-      </h1>
+      <Navbar />
+      <Feed />
     </Fragment>
   );
 };
