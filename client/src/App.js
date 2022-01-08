@@ -1,13 +1,15 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Navbar from './components/layout/Navbar';
 import Feed from './components/layout/Feed';
-import './App.css';
+import './assets/App.css';
 
 const App = () => {
+  const [search, setSearch] = useState();
+
   return (
     <Fragment>
-      <Navbar />
-      <Feed />
+      <Navbar updateSearch={(e) => setSearch(e)} />
+      <Feed search={search} />
     </Fragment>
   );
 };

@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+body {
+  background-color: #fafafa;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.center-container {
+  max-width: 620px;
+  grid-column-start: 2;
+}
+
+.logo-text {
+  font-family: 'Norican', cursive;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #fff;
+  display: grid;
+  align-items: center;
+  height: 60px;
+  grid-template-columns:  1fr 620px 1fr;
+}
+
+.navbar .center-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar {
+  margin: auto 0;
+  height: 30px;
+  padding: 0 .7rem;
+  background-color: #efefef;
+  border: none;
+  outline: none;
+  border-radius: .5rem;
+}
+
+.navbar .right-container {
+  padding-left: 100px;
+}
+
+/* Main Feed Styles */
+section {
+  margin: auto;
+}
+
+section.center-container {
+  height: 100vh;
+}
+
+.post-card {
+  max-width: 620px;
+  border: 1px solid #ccc;
+  background-color: #fff; 
+  margin-top: 2rem;
+}
+
+.post-card img {
+  max-width: 620px;
+} 
+
+.post-header {
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  padding: 1rem 1.5rem ;  
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.post-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  height: 25px;
+  width: 25px;
+  margin-right: 1rem;
+}
+
+.date {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.post-details {
+  padding: 0 1.5rem 1rem;
+  line-height: 1.4;
+}
+
+.post-description {
+  font-size: 14px;
+  padding-top: .5rem;
+  letter-spacing: .4px;
+}
+
+/* Auth Form Styles */
+
+/* Calendar Styles */
+

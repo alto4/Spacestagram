@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Post from './Post';
 import axios from 'axios';
 
-const Feed = () => {
+const Feed = ({ search }) => {
   const [posts, setPosts] = useState();
+  const [filteredPosts, setFilteredPosts] = useState();
 
   useEffect(() => {
     const getPosts = async () => {
@@ -18,7 +19,27 @@ const Feed = () => {
     getPosts();
   }, []);
 
-  return <section className='center-container'>{posts && posts.map((post) => <Post post={post} />)}</section>;
+  useEffect(() => {
+    if (search?.length > 0) {
+      let relevantPosts = posts?.filter(
+        (post) =>
+          post.title.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          post.explanation.toLowerCase().indexOf(search.toLowerCase()) > -1
+      );
+      console.log(relevantPosts);
+      setFilteredPosts(relevantPosts);
+    } else {
+      setFilteredPosts([]);
+    }
+  }, [posts, search]);
+
+  return (
+    <section className='center-container'>
+      {search?.length > 0
+        ? filteredPosts && filteredPosts.map((post) => <Post key={post.date} post={post} />)
+        : posts && posts.map((post) => <Post key={post.date} post={post} />)}
+    </section>
+  );
 };
 
 export default Feed;
