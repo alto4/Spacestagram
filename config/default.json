@@ -1,5 +1,5 @@
  {
    "mongoConnectionString": "mongodb+srv://alto4:TuckerAlton1@spacestagram.wwela.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-   "jwtSecret": "ahrwjsy23"
- 
+   "jwtSecret": "ahrwjsy23",
+   "nasaApiKey": "looKBwnQ1BFBRX9DRhDIUqIxpY6MHHyvjUIUvZF4"
   }
