@@ -49,12 +49,21 @@ body {
 }
 
 /* Main Feed Styles */
+main {
+  display: grid;
+  grid-template-columns: 1fr 620px 1fr;
+}
+
 section {
   margin: auto;
 }
 
 section.center-container {
   height: 100vh;
+}
+
+main .right-container {
+  margin: 2rem;
 }
 
 .post-card {
@@ -65,7 +74,7 @@ section.center-container {
 }
 
 .post-card img {
-  max-width: 620px;
+  max-width: 100%;
 } 
 
 .post-header {
@@ -88,7 +97,7 @@ section.center-container {
   margin-right: 1rem;
 }
 
-.date {
+.post-card .date {
   font-weight: 800;
   font-size: 14px;
 }

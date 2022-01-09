@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Fragment>
       <Navbar updateSearch={(e) => setSearch(e)} />
-      <Feed search={search} />
+      <Feed search={search} setSearch={setSearch} />
     </Fragment>
   );
 };

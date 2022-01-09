@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Post from './Post';
 import axios from 'axios';
+import DateSelector from './DateSelector';
 
-const Feed = ({ search }) => {
+const Feed = ({ search, setSearch }) => {
   const [posts, setPosts] = useState();
+  const [dateFilter, setDateFilter] = useState();
   const [filteredPosts, setFilteredPosts] = useState();
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const Feed = ({ search }) => {
 
   useEffect(() => {
     if (search?.length > 0) {
+      console.log('searching for ', search);
       let relevantPosts = posts?.filter(
         (post) =>
           post.title.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
@@ -28,17 +31,38 @@ const Feed = ({ search }) => {
       );
       console.log(relevantPosts);
       setFilteredPosts(relevantPosts);
-    } else {
+    }
+    if (dateFilter) {
+      setFilteredPosts(posts?.filter((post) => post.date === dateFilter));
+      console.log('filtered posts => ', filteredPosts);
+    }
+    if (!search && !dateFilter) {
       setFilteredPosts([]);
     }
-  }, [posts, search]);
+  }, [posts, search, dateFilter]);
+
+  useEffect(() => {}, [filteredPosts]);
+
+  const updateDateFilter = (date) => {
+    const formattedDate = date.toISOString().slice(0, 10);
+    console.log('updatedDate => ', formattedDate);
+    setDateFilter(formattedDate);
+  };
 
   return (
-    <section className='center-container'>
-      {search?.length > 0
-        ? filteredPosts && filteredPosts.map((post) => <Post key={post.date} post={post} />)
-        : posts && posts.map((post) => <Post key={post.date} post={post} />)}
-    </section>
+    <Fragment>
+      <main>
+        <section className='center-container'>
+          {search?.length > 0
+            ? filteredPosts && filteredPosts.map((post) => <Post key={post.date} post={post} />)
+            : posts && posts.map((post) => <Post key={post.date} post={post} />)}
+        </section>
+        <div className='right-container'>
+          <i className='fa fa-calendar'></i>
+          <DateSelector updateDateFilter={updateDateFilter} />
+        </div>
+      </main>
+    </Fragment>
   );
 };
 
