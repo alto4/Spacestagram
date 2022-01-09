@@ -5,6 +5,7 @@ import DateSelector from './DateSelector';
 
 const Feed = ({ search, setSearch }) => {
   const [posts, setPosts] = useState();
+  const [startDate, setStartDate] = useState('2022-01-01');
   const [dateFilter, setDateFilter] = useState();
   const [filteredPosts, setFilteredPosts] = useState();
 
@@ -13,29 +14,38 @@ const Feed = ({ search, setSearch }) => {
       let res = await axios.get('/key');
       let apiKey = res.data.key;
 
-      res = await axios.get(`https://api.nasa.gov/planetary/apod/?start_date=2022-01-01&api_key=${apiKey}`);
+      res = await axios.get(`https://api.nasa.gov/planetary/apod/?start_date=${startDate}&api_key=${apiKey}`);
       let data = res.data;
       setPosts(data.reverse());
     };
 
     getPosts();
-  }, []);
+  }, [startDate]);
 
   useEffect(() => {
+    if (dateFilter) {
+      const datedPost = posts?.filter((post) => post.date === dateFilter);
+      setFilteredPosts(datedPost);
+      setSearch('');
+      return;
+    }
+
     if (search?.length > 0) {
+      if (dateFilter) {
+        setDateFilter('');
+        setFilteredPosts([]);
+      }
       console.log('searching for ', search);
       let relevantPosts = posts?.filter(
         (post) =>
           post.title.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
           post.explanation.toLowerCase().indexOf(search.toLowerCase()) > -1
       );
-      console.log(relevantPosts);
       setFilteredPosts(relevantPosts);
+    } else {
+      setFilteredPosts([]);
     }
-    if (dateFilter) {
-      setFilteredPosts(posts?.filter((post) => post.date === dateFilter));
-      console.log('filtered posts => ', filteredPosts);
-    }
+
     if (!search && !dateFilter) {
       setFilteredPosts([]);
     }
@@ -53,12 +63,23 @@ const Feed = ({ search, setSearch }) => {
     <Fragment>
       <main>
         <section className='center-container'>
-          {search?.length > 0
+          {search?.length > 0 || dateFilter
             ? filteredPosts && filteredPosts.map((post) => <Post key={post.date} post={post} />)
             : posts && posts.map((post) => <Post key={post.date} post={post} />)}
         </section>
         <div className='right-container'>
-          <i className='fa fa-calendar'></i>
+          {dateFilter ? (
+            <i
+              onClick={(e) => {
+                setDateFilter('');
+                setStartDate('2021-12-01');
+              }}
+              className='fa fa-close'
+            ></i>
+          ) : (
+            <i className='fa fa-calendar'></i>
+          )}
+
           <DateSelector updateDateFilter={updateDateFilter} />
         </div>
       </main>

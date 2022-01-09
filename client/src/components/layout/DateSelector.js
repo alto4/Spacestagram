@@ -13,6 +13,7 @@ const DateSelector = ({ updateDateFilter }) => {
           setFilterDate(date);
           updateDateFilter(date);
         }}
+        open={true}
       />
     </div>
   );
