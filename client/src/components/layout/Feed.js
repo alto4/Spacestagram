@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import Post from './Post';
 import axios from 'axios';
 import DateSelector from './DateSelector';
+import Navbar from './Navbar';
 
 const Feed = ({ search, setSearch }) => {
   const [posts, setPosts] = useState();
@@ -61,6 +62,7 @@ const Feed = ({ search, setSearch }) => {
 
   return (
     <Fragment>
+      <Navbar updateSearch={(e) => setSearch(e)} />
       <main>
         <section className='center-container'>
           {search?.length > 0 || dateFilter

@@ -18,7 +18,8 @@ const Post = ({ post }) => {
         <img src={url} alt={explanation.substring(0, 150)} />
       </div>
       <div className='post-details'>
-        <i className='fa fa-like'></i>
+        <i class='far fa-heart fa-lg' style={{ color: 'red' }}></i>
+        {/* <i class='fa fa-heart' style={{ color: 'red' }}></i> */}
         <div>
           <p>
             <span className='date'>{date}</span> <span className='title'>"{title}"</span>

@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   likedPhotos: {
     type: [String],
   },
-  creatdeOn: {
+  createdOn: {
     type: Date,
     default: Date.now(),
   },
