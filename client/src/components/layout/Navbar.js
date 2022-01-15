@@ -1,7 +1,7 @@
 import React from 'react';
 import avatar from '../../assets/images/nasa_logo.png';
 
-const Navbar = ({ updateSearch }) => {
+const Navbar = ({ updateSearch, logout }) => {
   return (
     <nav className='navbar'>
       <div className='center-container'>
@@ -15,7 +15,7 @@ const Navbar = ({ updateSearch }) => {
           />
         </div>
       </div>
-      <div className='right-container'>
+      <div className='right-container' onClick={logout}>
         <img src={avatar} alt='' className='avatar' />
       </div>
     </nav>

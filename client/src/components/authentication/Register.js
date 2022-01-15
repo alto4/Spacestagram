@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({ setAuth }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -35,6 +35,7 @@ const Register = () => {
         const res = await axios.post('/api/users', data, config);
 
         console.log('Token returned after successful registration => ', res.data);
+        setAuth(true);
       } catch (error) {
         console.error(error.response.data);
       }
@@ -42,21 +43,43 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <section className='center-container form-container'>
       <form
+        className='auth-form'
         onSubmit={(e) => {
           onSubmit(e);
         }}
       >
-        <input name='email' value={email} onChange={(e) => onChange(e)} />
-        <input name='username' value={username} onChange={(e) => onChange(e)} />
-        <input name='password' value={password} onChange={(e) => onChange(e)} />
-        <input name='passwordConfirm' value={passwordConfirm} onChange={(e) => onChange(e)} />
+        <h1 className='logo-text'>Spacestagram</h1>
+        <p className='form-description'>
+          Sign up to see some of the most beautiful photos of outer space ever captured
+        </p>
+        <input name='email' placeholder='Email' value={email} onChange={(e) => onChange(e)} />
+        <input name='username' placeholder='Username' value={username} onChange={(e) => onChange(e)} />
+        <input name='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
+        <input
+          name='passwordConfirm'
+          placeholder='Confirm Password'
+          value={passwordConfirm}
+          onChange={(e) => onChange(e)}
+        />
         <button type='submit'>Register</button>
+        <div className='or-container'>
+          <div>
+            <hr />
+          </div>
+
+          <span>OR</span>
+          <div>
+            <hr />
+          </div>
+        </div>
+        <button type='submit'>Sign In To Demo Account</button>
+        <Link to='/login'>
+          <span>Already have an account? Login here.</span>
+        </Link>
       </form>
-      <Link to='/login'>Already have an account? Login here.</Link>
-    </div>
+    </section>
   );
 };
 

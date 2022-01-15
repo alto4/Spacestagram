@@ -18,7 +18,7 @@ const Post = ({ post }) => {
         <img src={url} alt={explanation.substring(0, 150)} />
       </div>
       <div className='post-details'>
-        <i class='far fa-heart fa-lg' style={{ color: 'red' }}></i>
+        <i className='far fa-heart fa-lg' style={{ color: 'red' }}></i>
         {/* <i class='fa fa-heart' style={{ color: 'red' }}></i> */}
         <div>
           <p>

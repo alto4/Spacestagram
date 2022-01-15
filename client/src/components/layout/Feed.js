@@ -4,7 +4,7 @@ import axios from 'axios';
 import DateSelector from './DateSelector';
 import Navbar from './Navbar';
 
-const Feed = ({ search, setSearch }) => {
+const Feed = ({ search, setSearch, logout }) => {
   const [posts, setPosts] = useState();
   const [startDate, setStartDate] = useState('2022-01-01');
   const [dateFilter, setDateFilter] = useState();
@@ -50,6 +50,7 @@ const Feed = ({ search, setSearch }) => {
     if (!search && !dateFilter) {
       setFilteredPosts([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts, search, dateFilter]);
 
   useEffect(() => {}, [filteredPosts]);
@@ -62,7 +63,7 @@ const Feed = ({ search, setSearch }) => {
 
   return (
     <Fragment>
-      <Navbar updateSearch={(e) => setSearch(e)} />
+      <Navbar updateSearch={(e) => setSearch(e)} logout={logout} />
       <main>
         <section className='center-container'>
           {search?.length > 0 || dateFilter
