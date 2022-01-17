@@ -6,6 +6,7 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  UPDATE_LIKES,
 } from '../actions/types';
 
 const initialState = {
@@ -36,7 +37,6 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
-
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case AUTH_ERROR:
@@ -49,6 +49,8 @@ export default function (state = initialState, action) {
         loading: false,
         user: null,
       };
+    case UPDATE_LIKES:
+      return state;
     default:
       return state;
   }
