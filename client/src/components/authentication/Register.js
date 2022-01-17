@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Register = ({ setAuth }) => {
+const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -19,28 +22,16 @@ const Register = ({ setAuth }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
-      console.log('Passwords do not align.');
+      setAlert('Passwords do not align.');
     } else {
-      const userData = { username, email, password };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        const data = JSON.stringify(userData);
-
-        const res = await axios.post('/api/users', data, config);
-
-        console.log('Token returned after successful registration => ', res.data);
-        setAuth(true);
-      } catch (error) {
-        console.error(error.response.data);
-      }
+      register({ username, email, password });
     }
   };
+
+  if (isAuthenticated) {
+    console.log('auth granted, redirect here.');
+    return <Navigate replace to='/feed' />;
+  }
 
   return (
     <section className='center-container form-container'>
@@ -51,6 +42,15 @@ const Register = ({ setAuth }) => {
         }}
       >
         <h1 className='logo-text'>Spacestagram</h1>
+        {alerts?.length > 0 && (
+          <ul style={{ colour: 'red' }}>
+            {' '}
+            {alerts.map((alert) => (
+              <li key={alert.id}>{alert.message}</li>
+            ))}
+          </ul>
+        )}
+
         <p className='form-description'>
           Sign up to see some of the most beautiful photos of outer space ever captured
         </p>
@@ -83,4 +83,16 @@ const Register = ({ setAuth }) => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  alerts: PropTypes.array.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  alerts: state.alert,
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

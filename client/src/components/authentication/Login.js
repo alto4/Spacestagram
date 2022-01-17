@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 
-const Login = ({ setAuth }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -18,25 +20,17 @@ const Login = ({ setAuth }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const userData = { username, password };
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
+    console.log('username => ', username);
+    console.log('password => ', password);
 
-      const data = JSON.stringify(userData);
-
-      const res = await axios.post('/api/auth', data, config);
-
-      console.log('Token returned after successful login => ', res.data);
-      setAuth(true);
-    } catch (error) {
-      console.error(error.response.data);
-    }
+    login(username, password);
   };
+
+  if (isAuthenticated) {
+    console.log('auth granted, redirect here.');
+    return <Navigate replace to='/feed' />;
+  }
 
   return (
     <section className='center-container form-container'>
@@ -72,4 +66,13 @@ const Login = ({ setAuth }) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);

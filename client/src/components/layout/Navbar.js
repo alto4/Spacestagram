@@ -1,5 +1,8 @@
 import React from 'react';
 import avatar from '../../assets/images/nasa_logo.png';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../../actions/auth';
 
 const Navbar = ({ updateSearch, logout }) => {
   return (
@@ -22,4 +25,8 @@ const Navbar = ({ updateSearch, logout }) => {
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+};
+
+export default connect(null, { logout })(Navbar);

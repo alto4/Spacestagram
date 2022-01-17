@@ -1,10 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { Navigate } from 'react-router-dom';
 import Post from './Post';
 import axios from 'axios';
 import DateSelector from './DateSelector';
 import Navbar from './Navbar';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Feed = ({ search, setSearch, logout }) => {
+const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout }) => {
   const [posts, setPosts] = useState();
   const [startDate, setStartDate] = useState('2022-01-01');
   const [dateFilter, setDateFilter] = useState();
@@ -15,7 +18,7 @@ const Feed = ({ search, setSearch, logout }) => {
       let res = await axios.get('/key');
       let apiKey = res.data.key;
 
-      res = await axios.get(`https://api.nasa.gov/planetary/apod/?start_date=${startDate}&api_key=${apiKey}`);
+      res = await axios.get(`https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}`);
       let data = res.data;
       setPosts(data.reverse());
     };
@@ -61,6 +64,11 @@ const Feed = ({ search, setSearch, logout }) => {
     setDateFilter(formattedDate);
   };
 
+  if (!isAuthenticated) {
+    console.log('auth denied, redirect here.');
+    return <Navigate replace to='/login' />;
+  }
+
   return (
     <Fragment>
       <Navbar updateSearch={(e) => setSearch(e)} logout={logout} />
@@ -71,18 +79,16 @@ const Feed = ({ search, setSearch, logout }) => {
             : posts && posts.map((post) => <Post key={post.date} post={post} />)}
         </section>
         <div className='right-container'>
-          {dateFilter ? (
-            <i
+          {dateFilter && (
+            <span
               onClick={(e) => {
                 setDateFilter('');
                 setStartDate('2021-12-01');
               }}
-              className='fa fa-close'
-            ></i>
-          ) : (
-            <i className='fa fa-calendar'></i>
+            >
+              Show All
+            </span>
           )}
-
           <DateSelector updateDateFilter={updateDateFilter} />
         </div>
       </main>
@@ -90,4 +96,13 @@ const Feed = ({ search, setSearch, logout }) => {
   );
 };
 
-export default Feed;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {})(Feed);

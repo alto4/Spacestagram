@@ -1,35 +1,35 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/authentication/Login';
 import Register from './components/authentication/Register';
 import Feed from './components/layout/Feed';
 import './assets/App.css';
+import { Provider } from 'react-redux';
+import store from './store';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
-  const [auth, setAuth] = useState(false);
   const [search, setSearch] = useState();
 
-  const logout = () => setAuth(false);
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path='/login'
-          element={auth ? <Feed search={search} setSearch={setSearch} logout={logout} /> : <Login setAuth={setAuth} />}
-        />
-        <Route
-          path='/register'
-          element={
-            auth ? <Feed search={search} setSearch={setSearch} logout={logout} /> : <Register setAuth={setAuth} />
-          }
-        />
-        <Route
-          path='/feed'
-          element={auth ? <Feed search={search} setSearch={setSearch} logout={logout} /> : <Navigate to='/login' />}
-        ></Route>
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/feed' element={<Feed search={search} setSearch={setSearch} />}></Route>
+        </Routes>
+      </Router>
+    </Provider>
   );
 };
 

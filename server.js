@@ -3,14 +3,13 @@ const connectDatabase = require('./config/db');
 const config = require('config');
 const cors = require('cors');
 
-const app = express();
+const app = express().use('*', cors());
 
 // Connect to MongoDB
 connectDatabase();
 
 // Middleware
 app.use(express.json({ extended: false }));
-app.use(cors({ origin: 'http://127.0.0.1:5000' }));
 
 app.get('/', (req, res) => res.send(`API running on port ${PORT}.`));
 app.get('/key', (req, res) => res.json({ key: config.get('nasaApiKey') }));
