@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
-import { register } from '../../actions/auth';
+import { register, login } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
+const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -28,6 +28,12 @@ const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
     }
   };
 
+  const onDemoSubmit = async (e) => {
+    e.preventDefault();
+
+    login('demo_user_1', 'password');
+  };
+
   if (isAuthenticated) {
     console.log('auth granted, redirect here.');
     return <Navigate replace to='/feed' />;
@@ -35,12 +41,7 @@ const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
 
   return (
     <section className='center-container form-container'>
-      <form
-        className='auth-form'
-        onSubmit={(e) => {
-          onSubmit(e);
-        }}
-      >
+      <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
         {alerts?.length > 0 && (
           <ul style={{ colour: 'red' }}>
@@ -63,7 +64,14 @@ const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
           value={passwordConfirm}
           onChange={(e) => onChange(e)}
         />
-        <button type='submit'>Register</button>
+        <button
+          type='submit'
+          onClick={(e) => {
+            onSubmit(e);
+          }}
+        >
+          Register
+        </button>
         <div className='or-container'>
           <div>
             <hr />
@@ -74,7 +82,14 @@ const Register = ({ setAlert, alerts, register, isAuthenticated }) => {
             <hr />
           </div>
         </div>
-        <button type='submit'>Sign In To Demo Account</button>
+        <button
+          type='submit'
+          onClick={(e) => {
+            onDemoSubmit(e);
+          }}
+        >
+          Sign In To Demo Account
+        </button>
         <Link to='/login'>
           <span>Already have an account? Login here.</span>
         </Link>
@@ -95,4 +110,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register, login })(Register);

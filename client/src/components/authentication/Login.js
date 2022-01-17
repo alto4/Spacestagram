@@ -21,10 +21,13 @@ const Login = ({ login, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('username => ', username);
-    console.log('password => ', password);
-
     login(username, password);
+  };
+
+  const onDemoSubmit = async (e) => {
+    e.preventDefault();
+
+    login('demo_user_1', 'password');
   };
 
   if (isAuthenticated) {
@@ -34,19 +37,21 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <section className='center-container form-container'>
-      <form
-        className='auth-form'
-        onSubmit={(e) => {
-          onSubmit(e);
-        }}
-      >
+      <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
         <p className='form-description'>
           Sign in to see some of the most beautiful photos of outer space ever captured
         </p>
         <input name='username' placeholder='Email or Username' value={username} onChange={(e) => onChange(e)} />
         <input name='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
-        <button type='submit'>Login</button>
+        <button
+          type='submit'
+          onClick={(e) => {
+            onSubmit(e);
+          }}
+        >
+          Login
+        </button>
         <div className='or-container'>
           <div>
             <hr />
@@ -57,7 +62,14 @@ const Login = ({ login, isAuthenticated }) => {
             <hr />
           </div>
         </div>
-        <button type='submit'>Sign In To Demo Account</button>
+        <button
+          type='submit'
+          onClick={(e) => {
+            onDemoSubmit(e);
+          }}
+        >
+          Sign In To Demo Account
+        </button>
         <Link to='/register'>
           <span>Don't have an account? Register here.</span>
         </Link>{' '}
