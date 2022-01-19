@@ -111,8 +111,6 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts, search, dateFilter]);
 
-  // useEffect(() => {}, [filteredPosts]);
-
   const updateDateFilter = (date) => {
     const formattedDate = date.toISOString().slice(0, 10);
     setDateFilter(formattedDate);
