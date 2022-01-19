@@ -3,7 +3,7 @@ import logo from '../../assets/images/nasa_logo.png';
 import { addLike, removeLike } from '../../actions/post';
 import { connect } from 'react-redux';
 
-const Post = ({ post, addLike, removeLike, likedPhotos }) => {
+const Post = ({ post, addLike, removeLike, likedPhotos, lastPostRef }) => {
   const [liked, setLiked] = useState(likedPhotos?.includes(post.date));
 
   const { title, explanation, date, url } = post;
@@ -11,7 +11,7 @@ const Post = ({ post, addLike, removeLike, likedPhotos }) => {
   console.log('likedPosts detected in post component => ', likedPhotos);
   return (
     <div className='post-card'>
-      <div className='post-header'>
+      <div className='post-header' ref={lastPostRef ? lastPostRef : null}>
         <div className='post-header-left'>
           <img src={logo} alt='' className='avatar' />
           <p>NASA</p>

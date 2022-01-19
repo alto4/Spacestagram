@@ -1,25 +1,53 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
 import Post from './Post';
 import axios from 'axios';
 import DateSelector from './DateSelector';
+import spinner from '../../assets/spinner.png';
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) => {
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState();
-  const [startDate, setStartDate] = useState('2022-01-01');
+  const [startDate, setStartDate] = useState(moment().subtract(10, 'days').format('YYYY-MM-DD'));
   const [dateFilter, setDateFilter] = useState();
   const [filteredPosts, setFilteredPosts] = useState();
   const [likedPhotos, setLikedPhotos] = useState([]);
 
+  const observer = useRef();
+  const lastPostRef = useCallback(
+    (lastPostRef) => {
+      if (loading) {
+        return;
+      }
+
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+
+      observer.current = new IntersectionObserver((posts) => {
+        if (posts[0].isIntersecting) {
+          // Request one more month of posts
+          let currentStart = moment(startDate);
+          let newStart = moment(currentStart, 'YYYY-MM-DD').subtract(10, 'days').format('YYYY-MM-DD');
+
+          setStartDate(newStart);
+        }
+      });
+
+      if (lastPostRef) {
+        observer.current.observe(lastPostRef);
+      }
+      console.log(lastPostRef);
+    },
+    [loading]
+  );
+
   useEffect(() => {
     setLikedPhotos(likes);
-    // DEBUG: load more images after 10s
-    setTimeout(() => {
-      setStartDate('2021-12-01');
-    }, 10000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.user]);
   const likes = auth.user?.likedPhotos;
@@ -29,9 +57,13 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
       let res = await axios.get('/key');
       let apiKey = res.data.key;
 
+      setLoading(true);
+
       res = await axios.get(`https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}`);
+
       let data = res.data;
       setPosts(data.reverse());
+      setLoading(false);
     };
 
     getPosts();
@@ -71,7 +103,6 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
 
   const updateDateFilter = (date) => {
     const formattedDate = date.toISOString().slice(0, 10);
-    console.log('updatedDate => ', formattedDate);
     setDateFilter(formattedDate);
   };
 
@@ -88,14 +119,25 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
           {search?.length > 0 || dateFilter
             ? filteredPosts &&
               filteredPosts.map((post) => <Post key={post.date} post={post} likedPhotos={likedPhotos} />)
-            : posts && posts.map((post) => <Post key={post.date} post={post} likedPhotos={likedPhotos} />)}
+            : posts?.map((post, index) => {
+                if (posts.length === index + 1) {
+                  return <Post key={post.date} post={post} likedPhotos={likedPhotos} lastPostRef={lastPostRef} />;
+                } else {
+                  return <Post key={post.date} post={post} likedPhotos={likedPhotos} />;
+                }
+              })}
+          {loading && (
+            <div>
+              <img src={spinner} alt='Loading spinner.' className='spinner' />
+            </div>
+          )}
         </section>
         <div className='right-container'>
           {dateFilter && (
             <span
               onClick={(e) => {
                 setDateFilter('');
-                setStartDate('2021-12-01');
+                setStartDate(startDate);
               }}
             >
               Show All
