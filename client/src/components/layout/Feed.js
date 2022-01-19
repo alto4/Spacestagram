@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect, Fragment } from 'react';
 import { Navigate } from 'react-router-dom';
 import Post from './Post';
 import axios from 'axios';
@@ -31,7 +31,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
 
       observer.current = new IntersectionObserver((posts) => {
         if (posts[0].isIntersecting) {
-          // Request one more month of posts
+          // Request 10 more days of posts
           let currentStart = moment(startDate);
           let newStart = moment(currentStart, 'YYYY-MM-DD').subtract(10, 'days').format('YYYY-MM-DD');
 
@@ -111,7 +111,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts, search, dateFilter]);
 
-  useEffect(() => {}, [filteredPosts]);
+  // useEffect(() => {}, [filteredPosts]);
 
   const updateDateFilter = (date) => {
     const formattedDate = date.toISOString().slice(0, 10);
@@ -124,7 +124,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
 
   return (
     <Fragment>
-      <Navbar updateSearch={(e) => setSearch(e)} logout={logout} />
+      <Navbar updateSearch={(e) => setSearch(e)} logout={logout} search={search} />
       <main>
         <section className='center-container'>
           {search?.length > 0 || dateFilter

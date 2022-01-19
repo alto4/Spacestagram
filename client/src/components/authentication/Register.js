@@ -44,7 +44,7 @@ const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
       <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
         {alerts?.length > 0 && (
-          <ul style={{ colour: 'red', textAlign: 'center' }}>
+          <ul className='auth-error-text'>
             {alerts.map((alert) => (
               <li key={alert.id}>{alert.message}</li>
             ))}
@@ -54,11 +54,12 @@ const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
         <p className='form-description'>
           Sign up to see some of the most beautiful photos of outer space ever captured
         </p>
-        <input name='email' placeholder='Email' value={email} onChange={(e) => onChange(e)} />
-        <input name='username' placeholder='Username' value={username} onChange={(e) => onChange(e)} />
-        <input name='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
+        <input name='email' type='text' placeholder='Email' value={email} onChange={(e) => onChange(e)} />
+        <input name='username' type='text' placeholder='Username' value={username} onChange={(e) => onChange(e)} />
+        <input name='password' type='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
         <input
           name='passwordConfirm'
+          type='password'
           placeholder='Confirm Password'
           value={passwordConfirm}
           onChange={(e) => onChange(e)}

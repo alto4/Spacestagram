@@ -40,7 +40,7 @@ const Login = ({ login, isAuthenticated, alerts }) => {
       <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
         {alerts?.length > 0 && (
-          <ul style={{ colour: 'red', textAlign: 'center' }}>
+          <ul className='auth-error-text'>
             {alerts.map((alert) => (
               <li key={alert.id}>{alert.message}</li>
             ))}
@@ -49,8 +49,14 @@ const Login = ({ login, isAuthenticated, alerts }) => {
         <p className='form-description'>
           Sign in to see some of the most beautiful photos of outer space ever captured
         </p>
-        <input name='username' placeholder='Email or Username' value={username} onChange={(e) => onChange(e)} />
-        <input name='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
+        <input
+          name='username'
+          type='text'
+          placeholder='Email or Username'
+          value={username}
+          onChange={(e) => onChange(e)}
+        />
+        <input name='password' type='password' placeholder='Password' value={password} onChange={(e) => onChange(e)} />
         <button
           type='submit'
           onClick={(e) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/images/nasa_logo.png';
 import { addLike, removeLike } from '../../actions/post';
 import { connect } from 'react-redux';
@@ -15,8 +15,6 @@ const Post = ({ post, addLike, removeLike, likedPhotos, lastPostRef }) => {
           <img src={logo} alt='' className='avatar' />
           <p>NASA</p>
         </div>
-
-        <i className='fa fa-ellipsis-h'></i>
       </div>
       <div className='post-image'>
         {url.indexOf('youtube') > -1 ? (
@@ -28,7 +26,7 @@ const Post = ({ post, addLike, removeLike, likedPhotos, lastPostRef }) => {
       <div className='post-details'>
         {liked ? (
           <i
-            class='fa fa-heart fa-lg'
+            className='fa fa-heart fa-lg'
             onClick={() => {
               removeLike(date);
               setLiked(false);

@@ -61,12 +61,17 @@ main .right-container {
   height: 20px;
   width: 20px;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 .post-description {
   font-size: 14px;
   padding-top: .5rem;
   letter-spacing: .4px;
+}
+
+.right-container span {
+  cursor: pointer;
 }
 
 @media(max-width: 680px) {

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import './Navbar.css';
 
-const Navbar = ({ updateSearch, logout, auth }) => {
+const Navbar = ({ updateSearch, search, logout, auth }) => {
   const [showLogout, setShowLogout] = useState(false);
 
   return (
@@ -17,13 +17,14 @@ const Navbar = ({ updateSearch, logout, auth }) => {
             type='text'
             placeholder='Search'
             className='searchbar'
-            onChange={(e) => updateSearch(e.target.value)}
+            onChange={(e) => updateSearch(e.target.value.trim())}
           />
         </div>
       </div>
       <div
         className='right-container'
         onClick={logout}
+        value={search}
         onMouseEnter={() => setShowLogout(true)}
         onMouseLeave={() => setShowLogout(false)}
       >
