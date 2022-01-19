@@ -1,0 +1,80 @@
+
+/* Auth Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  margin: auto
+}
+
+.auth-form .logo-text {
+  font-size: 2rem;
+}
+
+.auth-form input,
+.auth-form button {
+  margin: .5rem auto;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: .5rem;
+  outline: none;
+}
+
+.auth-form input {
+  background: #fafafa;
+}
+
+::placeholder {
+  padding-left: 1rem;
+}
+
+.form-container {
+  display: flex;
+ align-content: center; 
+}
+
+form {
+  background: #fff;
+}
+
+.form-description {
+  font-size: .9rem;
+  text-align: center;
+  margin: 1rem auto
+}
+
+.form-container button {
+  background-color: #aaa;
+  color: #fff;
+  font-weight: 500;
+  font-size: .8rem;
+  letter-spacing: .6px;
+}
+
+.form-container p {
+  font-size: .9rem;
+}
+
+.form-container span {
+  font-size: .7rem;
+}
+
+.or-container {
+  display: grid;
+  grid-template-columns: auto 50px auto;
+  color: #777;
+  align-items: center;
+  padding: 1rem;
+}
+
+.or-container span {
+  text-align: center;
+  font-size: 1rem;
+}
+
+hr {
+  width: 120px
+}

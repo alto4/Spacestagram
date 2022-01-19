@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import './Feed.css';
 
 const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) => {
   const [loading, setLoading] = useState(true);

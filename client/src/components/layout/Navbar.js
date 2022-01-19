@@ -3,7 +3,7 @@ import defaultAvatar from '../../assets/images/nasa_logo.png';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
-import auth from '../../reducers/auth';
+import './Navbar.css';
 
 const Navbar = ({ updateSearch, logout, auth }) => {
   const [showLogout, setShowLogout] = useState(false);

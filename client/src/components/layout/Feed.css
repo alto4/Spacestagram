@@ -1,0 +1,70 @@
+/* Main Feed Styles */
+main {
+  display: grid;
+  grid-template-columns: 1fr 620px 1fr;
+}
+
+section {
+  margin: auto;
+}
+
+section.center-container {
+  height: 100vh;
+}
+
+main .right-container {
+  margin: 2rem;
+}
+
+.post-card {
+  max-width: 620px;
+  border: 1px solid #ccc;
+  background-color: #fff; 
+  margin-top: 2rem;
+}
+
+.post-card img {
+  max-width: 100%;
+} 
+
+.post-header {
+  display: flex;
+  justify-content: space-between;  
+  align-items: center;
+  padding: 1rem 1.5rem ;  
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.post-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  height: 25px;
+  width: 25px;
+  margin-right: 1rem;
+}
+
+.post-card .date {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.post-details {
+  padding: 0 1.5rem 1rem;
+  line-height: 1.4;
+}
+
+.post-card i {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.post-description {
+  font-size: 14px;
+  padding-top: .5rem;
+  letter-spacing: .4px;
+}
