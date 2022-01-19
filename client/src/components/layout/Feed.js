@@ -41,9 +41,8 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
       if (lastPostRef) {
         observer.current.observe(lastPostRef);
       }
-      console.log(lastPostRef);
     },
-    [loading]
+    [loading, startDate]
   );
 
   useEffect(() => {
@@ -59,7 +58,9 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
 
       setLoading(true);
 
-      res = await axios.get(`https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}`);
+      res = await axios.get(
+        `https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}&thumbs=True`
+      );
 
       let data = res.data;
       setPosts(data.reverse());
@@ -82,7 +83,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
         setDateFilter('');
         setFilteredPosts([]);
       }
-      console.log('searching for ', search);
+
       let relevantPosts = posts?.filter(
         (post) =>
           post.title.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
@@ -107,7 +108,6 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
   };
 
   if (!isAuthenticated) {
-    console.log('auth denied, redirect here.');
     return <Navigate replace to='/login' />;
   }
 
@@ -120,7 +120,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
             ? filteredPosts &&
               filteredPosts.map((post) => <Post key={post.date} post={post} likedPhotos={likedPhotos} />)
             : posts?.map((post, index) => {
-                if (posts.length === index + 1) {
+                if (posts.length === index + 1 && !dateFilter) {
                   return <Post key={post.date} post={post} likedPhotos={likedPhotos} lastPostRef={lastPostRef} />;
                 } else {
                   return <Post key={post.date} post={post} likedPhotos={likedPhotos} />;

@@ -31,7 +31,6 @@ const Login = ({ login, isAuthenticated, alerts }) => {
   };
 
   if (isAuthenticated) {
-    console.log('auth granted, redirect here.');
     return <Navigate replace to='/feed' />;
   }
 

@@ -39,7 +39,6 @@ export const register =
     } catch (error) {
       const errors = error.response.data.errors;
 
-      console.log('errors in register action => ', error);
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg)));
       }
@@ -65,7 +64,6 @@ export const login = (username, password) => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data.errors;
 
-    console.log('errors in register action => ', error);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg)));
     }

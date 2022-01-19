@@ -35,7 +35,6 @@ const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    console.log('auth granted, redirect here.');
     return <Navigate replace to='/feed' />;
   }
 

@@ -8,7 +8,6 @@ const Post = ({ post, addLike, removeLike, likedPhotos, lastPostRef }) => {
 
   const { title, explanation, date, url } = post;
 
-  console.log('likedPosts detected in post component => ', likedPhotos);
   return (
     <div className='post-card'>
       <div className='post-header' ref={lastPostRef ? lastPostRef : null}>
@@ -20,7 +19,11 @@ const Post = ({ post, addLike, removeLike, likedPhotos, lastPostRef }) => {
         <i className='fa fa-ellipsis-h'></i>
       </div>
       <div className='post-image'>
-        <img src={url} alt={explanation.substring(0, 150)} />
+        {url.indexOf('youtube') > -1 ? (
+          <iframe src={url} title={title} width='620px' height='372px' />
+        ) : (
+          <img src={url} alt={explanation.substring(0, 150)} />
+        )}
       </div>
       <div className='post-details'>
         {liked ? (
