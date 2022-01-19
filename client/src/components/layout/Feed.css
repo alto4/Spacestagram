@@ -68,3 +68,10 @@ main .right-container {
   padding-top: .5rem;
   letter-spacing: .4px;
 }
+
+@media(max-width: 680px) {
+  .post-card {
+    max-width: 90vw;
+    margin: 1rem auto;
+  }
+}
