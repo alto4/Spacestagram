@@ -36,7 +36,7 @@ const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Navigate replace to='/feed' />;
+    return <Navigate replace to='/' />;
   }
 
   return (

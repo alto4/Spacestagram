@@ -26,7 +26,7 @@ const App = () => {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/feed' element={<Feed search={search} setSearch={setSearch} />}></Route>
+          <Route path='/' element={<Feed search={search} setSearch={setSearch} />}></Route>
         </Routes>
       </Router>
     </Provider>

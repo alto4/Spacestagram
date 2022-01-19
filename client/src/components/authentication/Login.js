@@ -32,7 +32,7 @@ const Login = ({ login, isAuthenticated, alerts }) => {
   };
 
   if (isAuthenticated) {
-    return <Navigate replace to='/feed' />;
+    return <Navigate replace to='/' />;
   }
 
   return (
