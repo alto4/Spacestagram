@@ -57,19 +57,29 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
       let res = await axios.get('/key');
       let apiKey = res.data.key;
 
+      console.log('Date filter => ', dateFilter);
+
       setLoading(true);
 
-      res = await axios.get(
-        `https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}&thumbs=True`
-      );
+      if (dateFilter) {
+        res = await axios.get(`https://api.nasa.gov/planetary/apod?date=${dateFilter}&api_key=${apiKey}&thumbs=True`);
 
-      let data = res.data;
-      setPosts(data.reverse());
+        let data = res.data;
+        setFilteredPosts([data]);
+      } else {
+        res = await axios.get(
+          `https://api.nasa.gov/planetary/apod?start_date=${startDate}&api_key=${apiKey}&thumbs=True`
+        );
+
+        let data = res.data;
+        setPosts(data.reverse());
+      }
+
       setLoading(false);
     };
 
     getPosts();
-  }, [startDate]);
+  }, [dateFilter, startDate]);
 
   useEffect(() => {
     if (dateFilter) {
@@ -81,7 +91,7 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) =>
 
     if (search?.length > 0) {
       if (dateFilter) {
-        setDateFilter('');
+        setDateFilter(null);
         setFilteredPosts([]);
       }
 
