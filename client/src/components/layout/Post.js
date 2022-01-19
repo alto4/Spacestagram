@@ -3,15 +3,10 @@ import logo from '../../assets/images/nasa_logo.png';
 import { addLike, removeLike } from '../../actions/post';
 import { connect } from 'react-redux';
 
-const Post = ({ post, addLike, removeLike, auth }) => {
-  const [likedPhotos, setLikedPhotos] = useState([]);
+const Post = ({ post, addLike, removeLike, likedPhotos }) => {
+  const [liked, setLiked] = useState(likedPhotos?.includes(post.date));
+
   const { title, explanation, date, url } = post;
-
-  const { likes } = auth.user;
-
-  useEffect(() => {
-    setLikedPhotos(likes);
-  }, [auth]);
 
   console.log('likedPosts detected in post component => ', likedPhotos);
   return (
@@ -28,10 +23,24 @@ const Post = ({ post, addLike, removeLike, auth }) => {
         <img src={url} alt={explanation.substring(0, 150)} />
       </div>
       <div className='post-details'>
-        {likedPhotos?.includes(date) ? (
-          <i class='fa fa-heart' onClick={() => removeLike(date)} style={{ color: 'red' }}></i>
+        {liked ? (
+          <i
+            class='fa fa-heart fa-lg'
+            onClick={() => {
+              removeLike(date);
+              setLiked(false);
+            }}
+            style={{ color: 'red' }}
+          ></i>
         ) : (
-          <i className='far fa-heart fa-lg' onClick={() => addLike(date)} style={{ color: 'red' }}></i>
+          <i
+            className='far fa-heart fa-lg'
+            onClick={() => {
+              addLike(date);
+              setLiked(true);
+            }}
+            style={{ color: 'red' }}
+          ></i>
         )}
         <div>
           <p>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, alerts }) => {
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -39,6 +39,13 @@ const Login = ({ login, isAuthenticated }) => {
     <section className='center-container form-container'>
       <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
+        {alerts?.length > 0 && (
+          <ul style={{ colour: 'red', textAlign: 'center' }}>
+            {alerts.map((alert) => (
+              <li key={alert.id}>{alert.message}</li>
+            ))}
+          </ul>
+        )}
         <p className='form-description'>
           Sign in to see some of the most beautiful photos of outer space ever captured
         </p>
@@ -79,12 +86,14 @@ const Login = ({ login, isAuthenticated }) => {
 };
 
 Login.propTypes = {
+  alerts: PropTypes.array.isRequired,
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  alerts: state.alert,
 });
 
 export default connect(mapStateToProps, { login })(Login);

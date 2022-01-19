@@ -44,8 +44,7 @@ const Register = ({ setAlert, alerts, register, login, isAuthenticated }) => {
       <form className='auth-form'>
         <h1 className='logo-text'>Spacestagram</h1>
         {alerts?.length > 0 && (
-          <ul style={{ colour: 'red' }}>
-            {' '}
+          <ul style={{ colour: 'red', textAlign: 'center' }}>
             {alerts.map((alert) => (
               <li key={alert.id}>{alert.message}</li>
             ))}

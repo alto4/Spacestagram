@@ -50,7 +50,17 @@ button:hover {
 
 .navbar .right-container {
   padding-left: 100px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
+
+.navbar .right-container img {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
 
 .react-datepicker__input-container,
 .react-datepicker__triangle {
@@ -114,6 +124,12 @@ main .right-container {
 .post-details {
   padding: 0 1.5rem 1rem;
   line-height: 1.4;
+}
+
+.post-card i {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
 }
 
 .post-description {

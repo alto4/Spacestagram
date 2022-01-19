@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import defaultAvatar from '../../assets/images/nasa_logo.png';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,6 +6,8 @@ import { logout } from '../../actions/auth';
 import auth from '../../reducers/auth';
 
 const Navbar = ({ updateSearch, logout, auth }) => {
+  const [showLogout, setShowLogout] = useState(false);
+
   return (
     <nav className='navbar'>
       <div className='center-container'>
@@ -19,8 +21,14 @@ const Navbar = ({ updateSearch, logout, auth }) => {
           />
         </div>
       </div>
-      <div className='right-container' onClick={logout}>
+      <div
+        className='right-container'
+        onClick={logout}
+        onMouseEnter={() => setShowLogout(true)}
+        onMouseLeave={() => setShowLogout(false)}
+      >
         <img src={auth?.user?.avatar ? auth.user.avatar : defaultAvatar} alt='' className='avatar' />
+        {showLogout && <div>Logout</div>}
       </div>
     </nav>
   );

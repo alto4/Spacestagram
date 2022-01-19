@@ -7,11 +7,22 @@ import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout }) => {
+const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout, auth }) => {
   const [posts, setPosts] = useState();
   const [startDate, setStartDate] = useState('2022-01-01');
   const [dateFilter, setDateFilter] = useState();
   const [filteredPosts, setFilteredPosts] = useState();
+  const [likedPhotos, setLikedPhotos] = useState([]);
+
+  useEffect(() => {
+    setLikedPhotos(likes);
+    // DEBUG: load more images after 10s
+    setTimeout(() => {
+      setStartDate('2021-12-01');
+    }, 10000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.user]);
+  const likes = auth.user?.likedPhotos;
 
   useEffect(() => {
     const getPosts = async () => {
@@ -75,8 +86,9 @@ const Feed = ({ search, setSearch, auth: { isAuthenticated }, logout }) => {
       <main>
         <section className='center-container'>
           {search?.length > 0 || dateFilter
-            ? filteredPosts && filteredPosts.map((post) => <Post key={post.date} post={post} />)
-            : posts && posts.map((post) => <Post key={post.date} post={post} />)}
+            ? filteredPosts &&
+              filteredPosts.map((post) => <Post key={post.date} post={post} likedPhotos={likedPhotos} />)
+            : posts && posts.map((post) => <Post key={post.date} post={post} likedPhotos={likedPhotos} />)}
         </section>
         <div className='right-container'>
           {dateFilter && (
