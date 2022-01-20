@@ -17,4 +17,12 @@ Once the basic server was setup, I began creating the feed components that rende
 
 Although I kept the design to a minimum, I made an effort to ensure the app is functional and renders well in desktop, tablet, and mobile views.
 
+For your convenience, there is an option to create a new account that will try to pull a profile image from gravatar to display on the feed, as well as store your liked photos. There is also an option to skip the authentication process by entering via a demo account. 
+
 Finally, this app was deployed using Heroku. 
+
+## Resources
+
+#### Requirements: https://docs.google.com/document/d/13zXpyrC2yGxoLXKktxw2VJG2Jw8SdUfliLM-bYQLjqE/edit#
+
+#### NASA Astronomy Photo of the Day Documentation: https://api.nasa.gov/#apod
