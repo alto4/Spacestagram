@@ -1,10 +1,20 @@
 # Spacestagram
 
-Spacestagram allows users to view some of the most beautiful, highest fidelity photographs of outer space in the world. 
+### Demo Link: https://stark-cove-99246.herokuapp.com/
 
-Spacestagram was built with React, Node, Express, MongoDB, and Vanilla CSS. A few tools used in the construction of Spacestagram were axios, JSONWebTokens, and Figma.
+Spacestagram allows users to view some of the most beautiful, highest fidelity photographs of outer space in the world, courtesy of NASA's Astronomy Photo of the Day API. 
+
+Spacestagram was built with React, Redux, Node, Express, MongoDB, and CSS. A few tools used in the construction of Spacestagram were axios, JSONWebTokens, and Figma.
 
 Design files used to mockup Spacestagram for desktop, mobile, and tablet views can be found below: 
 [Spacetagram.pdf](https://github.com/alto4/spacestagram/files/7832380/Spacetagram.pdf)
 
-Once initial mockups were created, I proceeded to create a simple backend API using Node, Express and MongoDB to support authentication and store photos that each user has liked in the past. 
+Once initial mockups were created, I proceeded to create a simple backend API using Node, Express and MongoDB to support authentication and store dates that each user has liked photos from in the past. 
+
+I also added a route to retrieve the API key used to fetch data from NASA's Astronomy Photo of the Day API to avoid leaving it in the front-end code.
+
+Once the basic server was setup, I began creating the feed components that render individual posts. A couple of features I incorporated into the feed include a loading spinner, the ability to search by keyword, a date filter, as well and infinite scroll effect by fetching 10 more days of photos once the user reaches the bottom of the viewport. 
+
+Although I kept the design to a minimum, I made an effort to ensure the app is functional and renders well in desktop, tablet, and mobile views.
+
+Finally, this app was deployed using Heroku. 
